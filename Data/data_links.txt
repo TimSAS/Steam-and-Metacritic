@@ -1,0 +1,2 @@
+https://data.world/craigkelly/steam-game-data
+https://github.com/CraigKelly/steam-data
