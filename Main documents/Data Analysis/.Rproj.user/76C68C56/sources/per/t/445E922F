@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1545406133582.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "445E922F",
+    "lastKnownWriteTime" : 18296075356012642,
+    "last_content_update" : 1545406133582,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "460CC678",
+        "caption" : "games_features",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=games_features&cache_key=460CC678",
+        "displayedObservations" : "13357",
+        "environment" : "",
+        "object" : "games_features",
+        "preview" : "0",
+        "totalObservations" : "13357",
+        "variables" : "78"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

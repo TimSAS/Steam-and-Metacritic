@@ -1,0 +1,34 @@
+---
+title: "Data Analysis"
+author: "Tim Abramov"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+"Are there any qualitative differences that can be measured between games that received a Metacritic score and those that didn't?"
+```{r echo = FALSE}
+##remove all nonGame cases
+##then group by if metacritic != 0 (one group of games that received the score, and one that didn't)
+
+```
+
+
+## Question 2
+"Does length of game description or number of game screenshots have a measurable effect on the sales of the game?"
+```{r echo = FALSE}
+##do a regression analysis num of words vs. sales(owners)
+##and num of screenshots vs. sales(owners)
+```
+
+
+## Question 3
+"Is there an association between how many copies of the game were sold and the price of the game?"
+```{r echo = FALSE}
+##most likely a regression analysis here too
+##num of owners vs. price(final)
+```
+
