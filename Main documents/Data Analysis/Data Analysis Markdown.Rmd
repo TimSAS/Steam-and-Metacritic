@@ -25,15 +25,32 @@ games <- filter(game_features, GenreIsNonGame == FALSE)
 ## Question 2
 "Does length of game description or number of game screenshots have a measurable effect on the sales of the game?"
 ```{r echo = FALSE}
-##do a regression analysis num of words vs. sales(owners)
-##and num of screenshots vs. sales(owners)
+##regression analysis 
+
+
+##ScreenshotCount vs. SteamSpyOwners
+
+##1. Scatterplot
+scatter.smooth(x=games$ScreenshotCount, y=games$SteamSpyOwners, main="ScreenshotCount ~ SteamSpyOwners")
+##2. BoxPlots
+par(mfrow=c(1, 2))  # divide graph area in 2 columns
+boxplot(games$ScreenshotCount, main="ScreenshotCount",
+sub=paste("Outliers: ", length(boxplot.stats(games$ScreenshotCount)$out)))  # box plot for ScreenshotCount
+boxplot(games$SteamSpyOwners, main="SteamSpyOwners",
+sub=paste("Outliers: ", length(boxplot.stats(games$SteamSpyOwners)$out)))  # box plot for SteamSpyOwners
+##3. Density plot (check for normality of the data)
+##4. Linear model?
+
+##length(DetailedDescrip) vs. SteamSpyOwners
+
 ```
 
 
 ## Question 3
 "Is there an association between how many copies of the game were sold and the price of the game?"
 ```{r echo = FALSE}
-##most likely a regression analysis here too
-##num of owners vs. price(final)
+##regression analysis
+##SteamSpyOwners vs. PriceFinal
+
 ```
 
