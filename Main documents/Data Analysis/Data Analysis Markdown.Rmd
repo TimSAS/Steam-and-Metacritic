@@ -6,12 +6,17 @@ output: word_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(dplyr)
+
+games_features <- read_xlsx("games_features.xlsx")
+##we need only games:
+games <- filter(game_features, GenreIsNonGame == FALSE)
 ```
 
 ## Question 1
 "Are there any qualitative differences that can be measured between games that received a Metacritic score and those that didn't?"
 ```{r echo = FALSE}
-##remove all nonGame cases
 ##then group by if metacritic != 0 (one group of games that received the score, and one that didn't)
 
 ```
