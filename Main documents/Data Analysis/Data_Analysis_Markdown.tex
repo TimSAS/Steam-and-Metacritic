@@ -1,0 +1,145 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Data Analysis},
+            pdfauthor={Tim Abramov},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Data Analysis}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Tim Abramov}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+\subsection{Question 1}\label{question-1}
+
+\textbf{``Are there any qualitative differences that can be measured
+between games that received a Metacritic score and those that didn't?''}
+
+\subsection{Question 2}\label{question-2}
+
+\textbf{``Does the number of game screenshots have a measurable effect
+on the sales of the game?''}
+
+To visualize the relationship, let's graph a scatterplot first:
+\includegraphics{Data_Analysis_Markdown_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+Then, to see if we have any outliers, let's graph boxplots for both the
+``ScreenshotCount'' and ``SteamSpyOwners'':
+\includegraphics{Data_Analysis_Markdown_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+Next, let's look at distributions of our variables. Ideally our
+predictor variable(number of screenshots) should be close to being
+normally distributed:
+\includegraphics{Data_Analysis_Markdown_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+Finally, let's \ldots{}
+
+\begin{verbatim}
+## [1] 0.07601871
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = SteamSpyOwners ~ ScreenshotCount, data = games)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1558814  -165885  -119448   -62582 90431160 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)        41296      17839   2.315   0.0206 *  
+## ScreenshotCount    13445       1545   8.705   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1137000 on 13036 degrees of freedom
+## Multiple R-squared:  0.005779,   Adjusted R-squared:  0.005703 
+## F-statistic: 75.77 on 1 and 13036 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\subsection{Question 3}\label{question-3}
+
+\textbf{``Is there an association between how many copies of the game
+were sold and the price of the game?''}
+
+
+\end{document}

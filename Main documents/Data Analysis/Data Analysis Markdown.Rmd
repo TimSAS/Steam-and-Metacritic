@@ -1,21 +1,22 @@
 ---
 title: "Data Analysis"
 author: "Tim Abramov"
-output: word_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(readxl)
-library(dplyr)
+library(dplyr) ##for different filter()
+library(e1071) ##needed for normality graphs
 
 games_features <- read_xlsx("games_features.xlsx")
 ##we need only games:
-games <- filter(game_features, GenreIsNonGame == FALSE)
+games <- filter(games_features, GenreIsNonGame == FALSE)
 ```
 
 ## Question 1
-"Are there any qualitative differences that can be measured between games that received a Metacritic score and those that didn't?"
+__"Are there any qualitative differences that can be measured between games that received a Metacritic score and those that didn't?"__
 ```{r echo = FALSE}
 ##then group by if metacritic != 0 (one group of games that received the score, and one that didn't)
 
@@ -23,31 +24,53 @@ games <- filter(game_features, GenreIsNonGame == FALSE)
 
 
 ## Question 2
-"Does length of game description or number of game screenshots have a measurable effect on the sales of the game?"
+__"Does the number of game screenshots have a measurable effect on the sales of the game?"__
+
+To visualize the relationship, let's graph a scatterplot first:
 ```{r echo = FALSE}
-##regression analysis 
-
-
 ##ScreenshotCount vs. SteamSpyOwners
-
-##1. Scatterplot
+##1. Scatterplot, to visualize the relationship
 scatter.smooth(x=games$ScreenshotCount, y=games$SteamSpyOwners, main="ScreenshotCount ~ SteamSpyOwners")
+```
+
+
+Then, to see if we have any outliers, let's graph boxplots for both the "ScreenshotCount" and "SteamSpyOwners":
+```{r echo = FALSE}
 ##2. BoxPlots
 par(mfrow=c(1, 2))  # divide graph area in 2 columns
 boxplot(games$ScreenshotCount, main="ScreenshotCount",
 sub=paste("Outliers: ", length(boxplot.stats(games$ScreenshotCount)$out)))  # box plot for ScreenshotCount
 boxplot(games$SteamSpyOwners, main="SteamSpyOwners",
 sub=paste("Outliers: ", length(boxplot.stats(games$SteamSpyOwners)$out)))  # box plot for SteamSpyOwners
-##3. Density plot (check for normality of the data)
-##4. Linear model?
+```
 
+
+
+Next, let's look at distributions of our variables. Ideally our predictor variable(number of screenshots) should be close to being normally distributed: 
+```{r echo = FALSE}
+##3. Density plot (check for normality of the data)
+par(mfrow=c(1, 2))  # divide graph area in 2 columns
+plot(density(games$ScreenshotCount), main="Density Plot: ScreenshotCount", ylab="Frequency", sub=paste("Skewness:", round(e1071::skewness(games$ScreenshotCount), 2)))  # density plot for ScreenshotCount
+polygon(density(games$ScreenshotCount), col="red")
+plot(density(games$SteamSpyOwners), main="Density Plot: SteamSpyOwners", ylab="Frequency", sub=paste("Skewness:", round(e1071::skewness(games$SteamSpyOwners), 2)))  # density plot for 'dist'
+polygon(density(games$SteamSpyOwners), col="red")
+```
+
+
+Finally, let's ...
+```{r echo = FALSE}
+##4. Correlation + Linear model
+cor(games$SteamSpyOwners, games$ScreenshotCount)
+screen_mod <- lm(SteamSpyOwners ~ ScreenshotCount, data = games)
+summary(screen_mod)
+##mean(screen_mod$residuals)
+##plot(screen_mod)
 ##length(DetailedDescrip) vs. SteamSpyOwners
 
 ```
 
-
 ## Question 3
-"Is there an association between how many copies of the game were sold and the price of the game?"
+__"Is there an association between how many copies of the game were sold and the price of the game?"__
 ```{r echo = FALSE}
 ##regression analysis
 ##SteamSpyOwners vs. PriceFinal
