@@ -32,9 +32,10 @@ To visualize the relationship, let's graph a scatterplot first:
 ##ScreenshotCount vs. SteamSpyOwners
 ##1. Scatterplot, to visualize the relationship
 scatter.smooth(x=games$ScreenshotCount, y=games$SteamSpyOwners, main="ScreenshotCount ~ SteamSpyOwners")
+##gf_point(SteamSpyOwners ~ ScreenshotCount, data = games)
 ```
 
-Not much can be seen at that scale, there seems to be many outliers. 
+Not much can be seen at that scale, too be many outliers. 
 
 Speaking of which, to see if we have any outliers (and how many), let's graph boxplots for both the "ScreenshotCount" and "SteamSpyOwners":
 ```{r echo = FALSE}
@@ -46,43 +47,27 @@ boxplot(games$SteamSpyOwners, main="SteamSpyOwners",
 sub=paste("Outliers: ", length(boxplot.stats(games$SteamSpyOwners)$out)))  # box plot for SteamSpyOwners
 ```
 
-As you can see, we have quite a few outliers. 530(around 4% of the dataset) for number of screenshots for a game, and 1981 (around 15% of the dataset) for number of owners for a game!
+As you can see, we have quite a few outliers. 530(around 4% of the dataset) for number of screenshots for a game, and 1981 (around 15% of the dataset) for number of owners for a game! To proceed with linear regression, we will need to deal with those outliers.
 
 
-Next, let's look at distributions of our variables. Ideally our predictor variable(number of screenshots) should be close to being normally distributed: 
+
+
+
+
 
 ```{r echo = FALSE}
-##3. Density plot (check for normality of the data)
-par(mfrow=c(1, 2))  # divide graph area in 2 columns
-plot(density(games$ScreenshotCount), main="Density Plot: ScreenshotCount", ylab="Frequency", sub=paste("Skewness:", round(e1071::skewness(games$ScreenshotCount), 2)))  # density plot for ScreenshotCount
-polygon(density(games$ScreenshotCount), col="red")
-plot(density(games$SteamSpyOwners), main="Density Plot: SteamSpyOwners", ylab="Frequency", sub=paste("Skewness:", round(e1071::skewness(games$SteamSpyOwners), 2)))  # density plot for 'dist'
-polygon(density(games$SteamSpyOwners), col="red")
-##favstats(games$SteamSpyOwners)
+##cor(games$SteamSpyOwners, games$ScreenshotCount)
 ```
 
-Distribution for our number of screenshots is right skewed, which is not ideal, but it might work alright.
-And note on distribution of owners for games: many games have close to no owners and only a few have some pretty high number of owners.
 
-Finally, let's look at the correlation of those two variables and create a linear regression model for it:
-Corellation:
-```{r}
-cor(games$SteamSpyOwners, games$ScreenshotCount)
+
+```{r echo = FALSE}
+##screen_mod <- lm(SteamSpyOwners ~ ScreenshotCount, data = games)
+##summary(screen_mod)
+##mplot(screen_mod, which = 1)
 ```
 
-As we can see, correlation is positive and relatively strong.
-Let's see what kind of model do we get out of it:
 
-```{r}
-screen_mod <- lm(SteamSpyOwners ~ ScreenshotCount, data = games)
-summary(screen_mod)
-```
-
-From the data above we can construct our equation for linear regression:
-SteamSpyOwners = 41296 + (13445 * ScreenshotCount)
-Next up, we have some p-values for both of the variables. Ho for a linear regression is that both coefficients associated with variables are 0. Ha is that they're not 0, thus there exists a relationship between the independent variable in question and the dependent variable.
-Since two of our p-values are less than our threshold (significance level of 0.05), we can reject the Ho and conclude that this model is statistically significant. 
-And while the model constructed is far from ideal, we proved that number of screenshots does have an impact on how many people buy it.
 
 ## Question 3
 __"Is there an association between how many copies of the game were sold and the price of the game?"__
@@ -95,7 +80,7 @@ To visualize the relationship, let's graph a scatterplot first:
 scatter.smooth(x=games$PriceFinal, y=games$SteamSpyOwners, main="PriceFinal ~ SteamSpyOwners")
 ```
 
-As with previous question, can't really say much at this stage. But there seems to be visible a positive trend.
+As with previous question, can't really say much at this stage. Again, problems with outliers
 
 Let's graph boxplots for both the "PriceFinal" and "SteamSpyOwners":
 ```{r echo = FALSE}
@@ -107,38 +92,23 @@ boxplot(games$SteamSpyOwners, main="SteamSpyOwners",
 sub=paste("Outliers: ", length(boxplot.stats(games$SteamSpyOwners)$out)))  # box plot for SteamSpyOwners
 ```
 
-Number of outlier is similar to previous question. 660(around 5% of the dataset) for final price for a game, and 1981 (around 15% of the dataset) for number of owners! What is pretty interesting, is that most games are bellow $25 mark, which makes sense, just never thought of it before.
+Number of outlier is similar to previous question. 660(around 5% of the dataset) for final price for a game, and 1981 (around 15% of the dataset) for number of owners! What is pretty interesting, is that most games are bellow $25 mark, which makes sense, just never thought of it before. Before we move on to the next stage, something needs to be done about those outliers.
 
 
-Next, let's look at distributions of our variables. Ideally our predictor variable(PriceFinal) should be close to being normally distributed: 
+
 
 ```{r echo = FALSE}
-##3. Density plot (check for normality of the data)
-par(mfrow=c(1, 2))  # divide graph area in 2 columns
-plot(density(games$PriceFinal), main="Density Plot: PriceFinal", ylab="Frequency", sub=paste("Skewness:", round(e1071::skewness(games$PriceFinal), 2)))  # density plot for PriceFinal
-polygon(density(games$ScreenshotCount), col="red")
-plot(density(games$SteamSpyOwners), main="Density Plot: SteamSpyOwners", ylab="Frequency", sub=paste("Skewness:", round(e1071::skewness(games$SteamSpyOwners), 2)))  # density plot for 'dist'
-polygon(density(games$SteamSpyOwners), col="red")
+##cor(games$SteamSpyOwners, games$PriceFinal)
 ```
 
-Distribution for price of a game is right skewed which is to be expected.
 
-Finally, let's look at the correlation of those two variables and create a linear regression model for it:
-Corellation:
-```{r}
-cor(games$SteamSpyOwners, games$PriceFinal)
+
+```{r echo = FALSE}
+price_mod <- lm(SteamSpyOwners ~ PriceFinal, data = games)
+##summary(screen_mod)
+##mplot(price_mod, which = 1)
 ```
 
-Correlation is positive and moderately strong.
-Let's see what kind of model do we get out of it:
 
-```{r}
-screen_mod <- lm(SteamSpyOwners ~ PriceFinal, data = games)
-summary(screen_mod)
-```
-
-From the data above we can construct our equation for linear regression:
-SteamSpyOwners = 118436 + (6360 * PriceFinal)
-Both of our p-values are really close to 0, thus we can reject the null hypothesis and conclude that this model is statistically significant. 
 
 
