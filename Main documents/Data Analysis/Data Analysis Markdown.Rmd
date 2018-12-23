@@ -71,16 +71,19 @@ Is there constant variance around the regression line at each x-location?
 Is the data independent (random)?
 
 ```{r echo = FALSE}
-##cor(games$owners_sqrt, games$screen_sqrt)
+screen_fit_sqrt <- lm(owners_sqrt ~ screen_sqrt, data = games)
+##screen_fit_log <- lm(owners_log ~ screen_log, data = games)
+mplot(screen_fit_sqrt, which = 1)
 ```
-
-
 
 ```{r echo = FALSE}
-##screen_mod <- lm(SteamSpyOwners ~ ScreenshotCount, data = games)
-##summary(screen_mod)
-##mplot(screen_mod, which = 1)
+##cor(owners_sqrt ~ screen_sqrt, data = games)
+##cor(owners_log ~ screen_log, data = games, use="complete.obs") ##excluding the NA values
 ```
+
+
+
+
 
 
 
