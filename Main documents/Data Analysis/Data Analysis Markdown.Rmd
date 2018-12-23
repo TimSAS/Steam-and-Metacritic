@@ -35,7 +35,7 @@ scatter.smooth(x=games$ScreenshotCount, y=games$SteamSpyOwners, main="Screenshot
 ##gf_point(SteamSpyOwners ~ ScreenshotCount, data = games)
 ```
 
-Not much can be seen at that scale, too be many outliers. 
+Not much can be seen at that scale, too many outliers. 
 
 Speaking of which, to see if we have any outliers (and how many), let's graph boxplots for both the "ScreenshotCount" and "SteamSpyOwners":
 ```{r echo = FALSE}
@@ -49,14 +49,29 @@ sub=paste("Outliers: ", length(boxplot.stats(games$SteamSpyOwners)$out)))  # box
 
 As you can see, we have quite a few outliers. 530(around 4% of the dataset) for number of screenshots for a game, and 1981 (around 15% of the dataset) for number of owners for a game! To proceed with linear regression, we will need to deal with those outliers.
 
+I won't be getting rid of outliers, since they were collected the same way all the other data was collected (they're not a mistake) and are significant for the question(s) I want to answer. To help linearize the relationships between the variables, I will transform the data needed into either log or square root of it. Let's see which will work the best.
 
+```{r echo=FALSE}
+##creating logs
+games$screen_log <- log(games$ScreenshotCount)
+games$owners_log <- log(games$SteamSpyOwners)
+##creating sqrt
+games$screen_sqrt <- sqrt(games$ScreenshotCount)
+games$owners_sqrt <- sqrt(games$SteamSpyOwners)
+##scatter.smooth(x=games$screen_log, y=games$owners_log, main="ScreenshotCount ~ SteamSpyOwners(logs)")
+gf_point(owners_log ~ screen_log, data = games) %>% gf_lm()
+gf_point(owners_sqrt ~ screen_sqrt, data = games) %>% gf_lm() 
+```
 
+Now we can clearly see the linear relationship between our variables. Due to the nature of how log works, when I "logged" my variables, records with zeroes in them were removed. Since zero values do matter to us, I decided to proceed with using square roots of our variables.
 
-
-
+To use linear regression on our variables, there are a few more assumptions we need to verify:
+Are the residuals normally distributed?
+Is there constant variance around the regression line at each x-location?
+Is the data independent (random)?
 
 ```{r echo = FALSE}
-##cor(games$SteamSpyOwners, games$ScreenshotCount)
+##cor(games$owners_sqrt, games$screen_sqrt)
 ```
 
 
