@@ -1,10 +1,37 @@
 https://www.inloox.com/company/blog/articles/the-importance-of-time-management-aspects-of-project-management-part-1/
+	Avoid distractions, Task list and priorities, Estimate and track time accurately, 
+	Create a schedule (all tasks + their duration, gantt charts)
+
 https://www.inloox.com/company/blog/articles/effective-time-management-with-pareto-and-eisenhower/
+	Pareto principle (80/20 split) and Eisenhower Matrix(prioritization of tasks based on their urgency and importance),
+        also Buffer Zone
+
 https://www.thebalancecareers.com/what-is-project-time-management-3879177
+	Plan schedule management (define the policies, procedures and documentation required for managing a project), 
+	Define activities, Sequence activities (prioritize), Estimate activity resources, Estimate activity durations,
+	Develop schedule, Control schedule (track the progress)
+
 https://www.thebalancecareers.com/alternatives-to-gantt-charts-2779594
+	Alternative to Gantt Charts: Task Lists, Spreadsheets, Flow Diagrams, Kanban Boards, Status Reports
+
 https://www.pmi.org/learning/library/time-management-project-functions-schedules-5723
+	Time Management Function (TMF): Planning, Scheduling, Monitoring, Control
+
 https://project-management.com/effective-time-management-for-project-success/
+	80/20 rule, Identify the urgency, Create a schedule, Include buffer times
+
 https://www.projectsmart.co.uk/four-steps-to-project-time-management.php
+	4 steps to project management: Define the Activities, Sequence the Activities, Estimate Activity Resources, Develop and Control the Schedule
+
 https://www.greycampus.com/blog/project-management/ten-essential-time-management-strategies
+	Don't procrastinate!!!, Schedule yourself, Prepare Must, Stay away from distractions, Prioritize your tasks,
+	Delegate some tasks, Good housekeeping, Keep yourself stress free, Have courage to say NO,
+	Review daily progress.
+	Time management chart
+
 https://www.quora.com/How-should-a-computer-science-student-manage-or-divide-his-time-and-energy
+	"divide the tasks into smaller short-term objectives and then follow a priority based scheduling algorithm"
+
 https://www.cs.bgu.ac.il/~elhadad/se/psp1.html
+	Categorize major activities, Record time spent on each major activity
+	Keep log of activities, Avoid distractions, Time-based and Product-based plans, Summarize time spent
