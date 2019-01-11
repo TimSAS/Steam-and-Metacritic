@@ -35,3 +35,11 @@ https://www.quora.com/How-should-a-computer-science-student-manage-or-divide-his
 https://www.cs.bgu.ac.il/~elhadad/se/psp1.html
 	Categorize major activities, Record time spent on each major activity
 	Keep log of activities, Avoid distractions, Time-based and Product-based plans, Summarize time spent
+
+Instructions:
+"With the extended deadline, I would like a 1-2 page single spaced paper on time management and planning as applied to CS/DS projects. 
+This would involve finding 2-3 useful articles or resource, then synthesizing and critically responding to the information you find.
+I know we talked about possible adjustments for the course structure of DWD in the future to better incorporate project planning time.
+I think it would be helpful for you to think about what you would do if dealing with a project of similar scope in the future, either 
+in a class or in a job. What would you do differently? What resources would you use to set deadlines and judge the amount of time things
+would take? How do you balance multiple projects or commitments over a long period of time?"
