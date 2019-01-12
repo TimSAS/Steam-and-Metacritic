@@ -29,9 +29,6 @@ https://www.greycampus.com/blog/project-management/ten-essential-time-management
 	Review daily progress.
 	Time management chart
 
-https://www.quora.com/How-should-a-computer-science-student-manage-or-divide-his-time-and-energy
-	"divide the tasks into smaller short-term objectives and then follow a priority based scheduling algorithm"
-
 https://www.cs.bgu.ac.il/~elhadad/se/psp1.html
 	Categorize major activities, Record time spent on each major activity
 	Keep log of activities, Avoid distractions, Time-based and Product-based plans, Summarize time spent
