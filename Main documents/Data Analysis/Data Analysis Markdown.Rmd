@@ -113,8 +113,16 @@ sub=paste("Outliers: ", length(boxplot.stats(games$SteamSpyOwners)$out)))  # box
 Number of outlier is similar to previous question. 660(around 5% of the dataset) for final price for a game, and 1981 (around 15% of the dataset) for number of owners! What is pretty interesting, is that most games are bellow $25 mark, which makes sense, just never thought of it before. Before we move on to the next stage, something needs to be done about those outliers.
 
 
+Since in question (2) we determined that values of 0 do matter to us, we will try to square root our data to help linearize the relationship between final price of the game and it's owner count:
 
+```{r}
+##creating sqrt
+games$priceFinal_sqrt <- sqrt(games$PriceFinal)
+##scatter plot
+gf_point(owners_sqrt ~ priceFinal_sqrt, data = games) %>% gf_lm() 
+```
 
+Linear relationship is observed, but it's pretty weak.
 ```{r echo = FALSE}
 ##cor(games$SteamSpyOwners, games$PriceFinal)
 ```
