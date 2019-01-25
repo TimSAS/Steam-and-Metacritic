@@ -8,7 +8,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(readxl)
 library(dplyr) ##for different filter()
-library(e1071) ##needed for normality graphs
+##library(e1071) ##needed for normality graphs
 library(mosaic)##favstats
 
 games_features <- read_xlsx("games_features.xlsx")
@@ -63,28 +63,36 @@ gf_point(owners_log ~ screen_log, data = games) %>% gf_lm()
 gf_point(owners_sqrt ~ screen_sqrt, data = games) %>% gf_lm() 
 ```
 
-Now we can clearly see the linear relationship between our variables. Due to the nature of how log works, when I "logged" my variables, records with zeroes in them were removed. Since zero values do matter to us, I decided to proceed with using square roots of our variables.
+While it's still not easy to see, but there appears to be linear relationship between our variables. Due to the nature of how log works, when I "logged" my variables, records with zeroes in them were removed. Since zero values do matter to us (free games or games without screenshots), I decided to proceed with using square roots of our variables.
 
-To use linear regression on our variables, there are a few more assumptions we need to verify:
-Are the residuals normally distributed?
-Is there constant variance around the regression line at each x-location?
-Is the data independent (random)?
+To use linear regression on our variables, there are a 4 main assumptions we need to verify:
+1.Is it indeed a linear relationship between the variables?
+2.Are the residuals normally distributed?
+3.Is there constant variance around the regression line at each x-location?
+4.Is the data independent (random)?
 
 ```{r echo = FALSE}
 screen_fit_sqrt <- lm(owners_sqrt ~ screen_sqrt, data = games)
 ##screen_fit_log <- lm(owners_log ~ screen_log, data = games)
 mplot(screen_fit_sqrt, which = 1)
+mplot(screen_fit_sqrt, which = 2)
+mplot(screen_fit_sqrt, which = 3)
 ```
 
-```{r echo = FALSE}
-##cor(owners_sqrt ~ screen_sqrt, data = games)
-##cor(owners_log ~ screen_log, data = games, use="complete.obs") ##excluding the NA values
+From the "Residuals vs Fitted" plot we can see that it's indeed a linear relationship, since the red line is mostly horizontal. In terms of normality of residual distribution, from "Normal Q-Q" plot we can see that it's not the case. Also, from "Scale-Location" plot we can observe that there doesn't exist a constant variance around the regression line at each x-location. Since each and every game is a unique thing and and parameters of one game usually doesn't depend on parameters from the other game, I will assume that our data is independent.
+As we can see, our data fails 2 out of 4 assumptions: normality of residual distribution and a constant variance around the regression line. Because of that regression analysis is not the ideal tool to assess the assosiation between those variables. But since it's the best way to do it that I know, I will procede with it, just need to keep in mind those failed assumptions:
+
+
+```{r}
+cor(owners_sqrt ~ screen_sqrt, data = games)
+summary(screen_fit_sqrt)
 ```
 
+Firstly, checking correlation between variables - it's pretty low. By running a summary analysis of our regression line we can derive our linear regression formula:
+y = 15.239 + 67.715 * x
+owners = 15.239 + 67.715 * screenshots
 
-
-
-
+Using a linear regression model for this data have proven to be not the best approach: it failed 2 out 4 assumptions to use linear model and does have really weak corellation using this model.
 
 
 ## Question 3
@@ -122,18 +130,36 @@ games$priceFinal_sqrt <- sqrt(games$PriceFinal)
 gf_point(owners_sqrt ~ priceFinal_sqrt, data = games) %>% gf_lm() 
 ```
 
-Linear relationship is observed, but it's pretty weak.
+Linear relationship is basically impossible to spot at this point.
+
+Let's check our assumptions for using a linear model:
+1.Is it indeed a linear relationship between the variables?
+2.Are the residuals normally distributed?
+3.Is there constant variance around the regression line at each x-location?
+4.Is the data independent (random)?
+
 ```{r echo = FALSE}
-##cor(games$SteamSpyOwners, games$PriceFinal)
+priceFinal_fit_sqrt <- lm(owners_sqrt ~ priceFinal_sqrt, data = games)
+##screen_fit_log <- lm(owners_log ~ screen_log, data = games)
+mplot(screen_fit_sqrt, which = 1)
+mplot(screen_fit_sqrt, which = 2)
+mplot(screen_fit_sqrt, which = 3)
 ```
 
+The same situation this time: data is independent and it's a linear relationship ("Residuals vs Fitted" plot), but residuals are not normally distributed (Normall Q-Q) and there is no constant variance around the regression line at each x-location. Thus, this time around, linear regression model is also not the best fit for these variables. Ohh well, let's see what kind of correlation we will get and what is the equation for linear regression:
 
 
-```{r echo = FALSE}
-price_mod <- lm(SteamSpyOwners ~ PriceFinal, data = games)
-##summary(screen_mod)
-##mplot(price_mod, which = 1)
+```{r}
+cor(games$SteamSpyOwners, games$PriceFinal)
+summary(priceFinal_fit_sqrt)
 ```
+
+For this question, using linear regression model, correlation is basically non-existent at 0.05 and our equation is:
+y = 140.3 + 30.5 * x
+owners = 140.3 + 30.5 * priceFinal
+
+Similar to question (2) using linear regression for this data is a bad fit, especially this time - correlation is basically non-existent. Unfortunately this is the best model for the situation I know at the moment, most likely there are better ways to assess this question. 
+
 
 
 
