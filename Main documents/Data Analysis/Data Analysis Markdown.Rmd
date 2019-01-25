@@ -17,7 +17,7 @@ games <- filter(games_features, GenreIsNonGame == FALSE)
 ```
 
 ## Question 1
-__"Are there any significant differences that can be measured between games that received a Metacritic score and those that didn't?"__
+__"Are there any associations that can be observed between games that received a Metacritic score and those that didn't?"__
 ```{r echo = FALSE}
 ##then group by if metacritic != 0 (one group of games that received the score, and one that didn't)
 
@@ -25,7 +25,7 @@ __"Are there any significant differences that can be measured between games that
 
 
 ## Question 2
-__"Does the number of game screenshots have a measurable effect on the sales of the game?"__
+__"Is there an association between number of screenshots in game description and the sales of the game?"__
 
 To visualize the relationship, let's graph a scatterplot first:
 ```{r echo = FALSE}
