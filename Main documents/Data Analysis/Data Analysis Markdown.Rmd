@@ -18,11 +18,88 @@ games <- filter(games_features, GenreIsNonGame == FALSE)
 
 ## Question 1
 __"Are there any associations that can be observed between games that received a Metacritic score and those that didn't?"__
-```{r echo = FALSE}
-##then group by if metacritic != 0 (one group of games that received the score, and one that didn't)
 
+Since the dataset I'm using consists of quite a few variables, I will compare only 4 variables to see if there are any associations between games that have a Metacritic score and those that don't. I've decided to use number of owners, game price, number of recommendations, and achievement count as the variables I would like to test. 
+
+First of all, let's divide our data in two groups by whether a game received or not a Metacritic score:
+```{r}
+with_metacritic <- filter(games, Metacritic > 0)
+without_metacritic <- filter(games, Metacritic == 0)
+
+meta_nonmeta <- c(length(with_metacritic$QueryID), length(without_metacritic$QueryID))
+barplot(meta_nonmeta, main = "Have Metacritic vs Don't Have Metacritic", ylab = "Number of Games")
 ```
 
+As you can see - majority of games didn't receive a Metacritic score. Only about 17% of games received it.
+
+Now, let's look at the means for our selected variables. My prediction is that there are some distinct differences in values for those variables between the two groups.
+First, I tried to use a boxplot but it's too hard to interpret the plot due to big numbers + many outliers:
+
+```{r}
+boxplot(with_metacritic$SteamSpyOwners)
+```
+
+Thus, I decided to use text-based statistical summaries to observe any differences between our groups:
+
+```{r echo = FALSE}
+print("SteamSpyOwners(with Metacritic first):")
+summary(with_metacritic$SteamSpyOwners)
+summary(without_metacritic$SteamSpyOwners)
+print("PriceFinal:")
+summary(with_metacritic$PriceFinal)
+summary(without_metacritic$PriceFinal)
+print("RecommendationCount:")
+summary(with_metacritic$RecommendationCount)
+summary(without_metacritic$RecommendationCount)
+print("AchievementCount:")
+summary(with_metacritic$AchievementCount)
+summary(without_metacritic$AchievementCount)
+```
+
+So, let's start with SteamSpyOwners: mean number of owners for games with Metacritic score is quite a bit higher than the other group. Also, 3rd quartile numbers for both groups are smaller than the means, indicating that there are quite a few outliers affecting the average drastically.
+
+For price: mean statistic is about twice as big in group with Metacritic score compared to one without.
+
+RecommendationCount: mean number of recommendations for the group with the score is quite a bit bigger comparatively and median for group without Metacritic is 0, which means that at least 50% of game in that group don't even have a single recommendation.
+
+In terms of number of achievements, at least 50% of games in group without the score don't have any. Also mean is about twice as big for the group that has the Metacritic score. Pretty amazed to see the max numbers of achievements, those games are either pretty deep or "grindy"(when developer forces you to progress really slowly, usually with an option to pay to progress quicker...)
+
+Let's also look on density plots for those variables, to hopefully have some new perspectives on the data:
+
+```{r}
+#Kernel Density plots for the variables
+d1 <- density(with_metacritic$SteamSpyOwners)
+plot(d1, main = "Owners Metacritic")
+polygon(d1, col="red", border = "blue")
+d1 <- density(without_metacritic$SteamSpyOwners)
+plot(d1, main = "Owners Non-Metacritic")
+polygon(d1, col="red", border = "blue")
+
+d1 <- density(with_metacritic$PriceFinal)
+plot(d1, main = "PriceFinal Metacritic")
+polygon(d1, col="red", border = "blue")
+d1 <- density(without_metacritic$PriceFinal)
+plot(d1, main = "PriceFinal Non-Metacritic")
+polygon(d1, col="red", border = "blue")
+
+d1 <- density(with_metacritic$RecommendationCount)
+plot(d1, main = "RecommendationCount Metacritic")
+polygon(d1, col="red", border = "blue")
+d1 <- density(without_metacritic$RecommendationCount)
+plot(d1, main = "RecommendationCount Non-Metacritic")
+polygon(d1, col="red", border = "blue")
+
+d1 <- density(with_metacritic$AchievementCount)
+plot(d1, main = "AchievementCount Metacritic")
+polygon(d1, col="red", border = "blue")
+d1 <- density(without_metacritic$AchievementCount)
+plot(d1, main = "AchievementCount Non-Metacritic")
+polygon(d1, col="red", border = "blue")
+```
+
+Hmm, well, these graphs didn't really reveal anything new to me, but still nice to have a visual representation of what's going on with the variables. 
+
+In conclusion to this question, there are certanly some distinct differences between games that have a Metacritic score and those that don't, in terms of their sales, price,  recommendations count, and achievements count. This does support my prediction made earlier.
 
 ## Question 2
 __"Is there an association between number of screenshots in game description and the sales of the game?"__
@@ -92,7 +169,7 @@ Firstly, checking correlation between variables - it's pretty low. By running a 
 y = 15.239 + 67.715 * x
 owners = 15.239 + 67.715 * screenshots
 
-Using a linear regression model for this data have proven to be not the best approach: it failed 2 out 4 assumptions to use linear model and does have really weak corellation using this model.
+Using a linear regression model for this data (square root of it) have proven to be not the best approach: it failed 2 out 4 assumptions to use linear model and does have really weak corellation using this model.
 
 
 ## Question 3
@@ -158,7 +235,7 @@ For this question, using linear regression model, correlation is basically non-e
 y = 140.3 + 30.5 * x
 owners = 140.3 + 30.5 * priceFinal
 
-Similar to question (2) using linear regression for this data is a bad fit, especially this time - correlation is basically non-existent. Unfortunately this is the best model for the situation I know at the moment, most likely there are better ways to assess this question. 
+Similar to question (2) using linear regression for this data (square root of it) is a bad fit, especially this time - correlation is basically non-existent. Unfortunately this is the best model for the situation I know at the moment, most likely there are better ways to assess this question. 
 
 
 
